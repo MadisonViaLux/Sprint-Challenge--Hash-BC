@@ -24,11 +24,25 @@ This sprint challenge is divided up into three parts:  Hash tables coding, block
 
 Explain in detail the workings of a dynamic array:
 * What is the runtime complexity to access an array, add or remove from the front, and add or remove from the back?
-* What is the worse case scenario if you try to extend the storage size of a dynamic array?
+        ***The runtime complexity of a dynamic array can be O(1) or more usually O(n). When adding or removing from the 
+        back of an array the runtime complexity is going to be O(1) because we can always have easy access to the end 
+        due to the length -1 method. However when adding or subtracting from the front of an array the runtime 
+        complexity will be O(n) because we will then need to reassign the front of that array.
+
+* What is the worst case scenario if you try to extend the storage size of a dynamic array?
+        ***It could attempt to take up more storage than it can realistically hold and the runtime will increase.
 
 Explain how a blockchain is structured. What are the blocks, what is the chain? How is the data organized?
+        ***A blockchain is structured in a way that relies on proof rather than trust. The blocks are constructed out
+        corresponding sets of data that are "chained" together by specific attributes of the data like the "Proof of 
+        mining" and "Hash" link. The structure of a block usually looks like this: 1)Index Number.  2)Timestamp.  
+        3)List of Transactions.  4)Proof used to Mine Block.  5)A Hash of the Previous Block.
  
 Explain how proof of work functions. How does it operate. How does this protect the chain from attack. What kind of attack is possible?
+        ***Proof of Work is used to make hacks against blockchain nearly impossible to accomplish. They are 
+        arbitrarily difficult problems that take large amounts of computation time to solve. "The difficulty can be
+        turned to allow for a consistent discovery of proofs, regardless of the total effort spent." There by protecting
+        the chain by basically making it near impossible to generate a new block.
 
 ## Project Set Up
 
