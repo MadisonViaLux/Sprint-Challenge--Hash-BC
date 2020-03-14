@@ -23,11 +23,14 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
-    proof = 0
+    proof = random.randint(1000000, 10000000)
     #  TODO: Your code here
 
-    print("Proof found: " + str(proof) + " in " + str(timer() - start))
-    return proof
+    while True:
+        if valid_proof(last_proof, proof):
+            print("Proof found: " + str(proof) + " in " + str(timer() - start))
+            return proof
+        proof += 1
 
 
 def valid_proof(last_hash, proof):
@@ -40,7 +43,11 @@ def valid_proof(last_hash, proof):
     """
 
     # TODO: Your code here!
-    pass
+    prev = hashlib.sha256(str(last_hash).encode()).hexdigest()
+    new = hashlib.sha256(str(proof).encode()).hexdigest()
+    if prev[-6:] == new[:6]:
+        return True
+    return False
 
 
 if __name__ == '__main__':
@@ -65,14 +72,25 @@ if __name__ == '__main__':
     while True:
         # Get the last proof from the server
         r = requests.get(url=node + "/last_proof")
-        data = r.json()
+        try:
+            data = r.json()
+        except ValueError:
+            print("Non-json response: ", r)
+            continue
+
         new_proof = proof_of_work(data.get('proof'))
 
         post_data = {"proof": new_proof,
                      "id": id}
 
         r = requests.post(url=node + "/mine", json=post_data)
-        data = r.json()
+
+        try:
+            data = r.json()
+        except ValueError:
+            print("Non-json response: ", r)
+            continue
+
         if data.get('message') == 'New Block Forged':
             coins_mined += 1
             print("Total coins mined: " + str(coins_mined))
